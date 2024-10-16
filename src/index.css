@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "CookieRun";
+  src: url("/public/fonts/CookieRunRegular.ttf");
+}
+
+.cookie-run {
+  font-family: "CookieRun";
+}

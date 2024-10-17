@@ -11,6 +11,8 @@ import {
   ListItem,
   IconButton,
   Flex,
+  Stack,
+  Skeleton,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
@@ -18,6 +20,7 @@ import SubtitleForm, { Subtitle } from "./SubtitleForm";
 import VideoPlayer from "./VideoPlayer";
 
 const VideoEditor = () => {
+  const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const ffmpegRef = useRef<FFmpeg>(new FFmpeg());
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -93,6 +96,7 @@ const VideoEditor = () => {
 
   // FFmpeg 로드
   const load = async () => {
+    setLoading(true);
     const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm";
     const ffmpeg = ffmpegRef.current;
     ffmpeg.on("log", ({ type, message }) => {
@@ -111,6 +115,7 @@ const VideoEditor = () => {
       ),
     });
     setLoaded(true);
+    setLoading(false);
   };
 
   const handleVideoUpload = async (
@@ -231,6 +236,32 @@ const VideoEditor = () => {
       };
     }
   }, [videoSrc]);
+
+  if (loading) {
+    return (
+      <Flex p={4}>
+        <Stack w="300px" p={4} spacing={4}>
+          <Skeleton height="40px" mb={8} />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="10px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="10px" />
+          <Skeleton height="20px" />
+          <Skeleton height="20px" />
+          <Skeleton height="40px" width="120px" />
+        </Stack>
+        <Box flex="1" justifyContent="center" alignItems="center" mt={8}>
+          <Skeleton height="400px" w="full" />
+        </Box>
+      </Flex>
+    );
+  }
 
   return (
     <Box p={4}>
